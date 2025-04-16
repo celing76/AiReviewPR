@@ -56,19 +56,25 @@ async function post({ url, body, header, json }) {
         // noinspection DuplicatedCode
         const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
             let responseBody = '';
+            // !!! 添加这一行来显式设置响应编码 !!!
+            res.setEncoding('utf8');
             res.on('data', (chunk) => {
                 responseBody += chunk;
             });
             res.on('end', () => {
+                // --- 开始添加调试日志 ---
+                console.log("--- [Action Debug] Received full response body ---");
+                // 打印前 1000 个字符，避免日志过长
+                console.log(responseBody.substring(0, 1000));
+                console.log("--- [Action Debug] End of response body sample ---");
+                // --- 结束添加调试日志 ---
                 try {
-                    if (json) {
-                        resolve(JSON.parse(responseBody));
-                    }
-                    else {
-                        resolve(responseBody);
-                    }
-                }
-                catch (error) {
+                    // ... 原有的 JSON.parse 逻辑 ...
+                } catch (error) {
+                    console.error("--- [Action Debug] JSON Parse Error ---");
+                    console.error("Error message:", error.message);
+                    // 打印导致失败的响应体片段
+                    console.error("Response body that failed parsing (first 1000 chars):", responseBody.substring(0, 1000));
                     reject(new Error('Failed to parse JSON response'));
                 }
             });
