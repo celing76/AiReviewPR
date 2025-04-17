@@ -62,14 +62,10 @@ async function post({ url, body, header, json }) {
                 responseBody += chunk;
             });
             res.on('end', () => {
-                // --- 开始添加调试日志 ---
-                console.log("--- [Action Debug] Received full response body ---");
-                // 打印前 1000 个字符，避免日志过长
-                console.log(responseBody);
-                console.log("--- [Action Debug] End of response body sample ---");
-                // --- 结束添加调试日志 ---
+                //console.log("--- [Action Debug] Received full response body ---");
+                //console.log(responseBody);
+                //console.log("--- [Action Debug] End of response body sample ---");
                 try {
-                    // ... 原有的 JSON.parse 逻辑 ...
                 } catch (error) {
                     console.error("--- [Action Debug] JSON Parse Error ---");
                     console.error("Error message:", error.message);
