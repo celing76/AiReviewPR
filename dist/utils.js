@@ -62,9 +62,9 @@ async function post({ url, body, header, json }) {
                 responseBody += chunk;
             });
             res.on('end', () => {
-                //console.log("--- [Action Debug] Received full response body ---");
-                //console.log(responseBody);
-                //console.log("--- [Action Debug] End of response body sample ---");
+                console.log("--- [Action Debug] Received full response body ---");
+                console.log(responseBody);
+                console.log("--- [Action Debug] End of response body sample ---");
                 try {
                     if (json) {
                         resolve(JSON.parse(responseBody));
