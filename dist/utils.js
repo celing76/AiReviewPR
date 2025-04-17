@@ -57,7 +57,7 @@ async function post({ url, body, header, json }) {
         const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
             let responseBody = '';
             // !!! 添加这一行来显式设置响应编码 !!!
-            res.setEncoding('utf8');
+            //res.setEncoding('utf8');
             res.on('data', (chunk) => {
                 responseBody += chunk;
             });
