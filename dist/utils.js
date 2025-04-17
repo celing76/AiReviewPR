@@ -56,8 +56,7 @@ async function post({ url, body, header, json }) {
         // noinspection DuplicatedCode
         const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
             let responseBody = '';
-            // !!! 添加这一行来显式设置响应编码 !!!
-            //res.setEncoding('utf8');
+
             res.on('data', (chunk) => {
                 responseBody += chunk;
             });
@@ -76,7 +75,6 @@ async function post({ url, body, header, json }) {
                 catch (error) {
                     console.error("--- [Action Debug] JSON Parse Error ---");
                     console.error("Error message:", error.message);
-                    // 打印导致失败的响应体片段
                     console.error("Response body that failed parsing (first 1000 chars):", responseBody);
                     reject(new Error('Failed to parse JSON response'));
                 }
