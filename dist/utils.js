@@ -66,7 +66,14 @@ async function post({ url, body, header, json }) {
                 //console.log(responseBody);
                 //console.log("--- [Action Debug] End of response body sample ---");
                 try {
-                } catch (error) {
+                    if (json) {
+                        resolve(JSON.parse(responseBody));
+                    }
+                    else {
+                        resolve(responseBody);
+                    }
+                }
+                catch (error) {
                     console.error("--- [Action Debug] JSON Parse Error ---");
                     console.error("Error message:", error.message);
                     // 打印导致失败的响应体片段
