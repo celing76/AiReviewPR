@@ -54,12 +54,16 @@ async function post({ url, body, header, json }) {
             headers: header
         };
         // noinspection DuplicatedCode
-        const req = (url_.protocol === "http" ? http_1.default : https_1.default).request(options, (res) => {
+        const req = (url_.protocol === "http:" ? http_1.default : https_1.default).request(options, (res) => {
             let responseBody = '';
+
             res.on('data', (chunk) => {
                 responseBody += chunk;
             });
             res.on('end', () => {
+                console.log("--- [Action Debug] Received full response body ---");
+                console.log(responseBody);
+                console.log("--- [Action Debug] End of response body sample ---");
                 try {
                     if (json) {
                         resolve(JSON.parse(responseBody));
@@ -69,6 +73,9 @@ async function post({ url, body, header, json }) {
                     }
                 }
                 catch (error) {
+                    console.error("--- [Action Debug] JSON Parse Error ---");
+                    console.error("Error message:", error.message);
+                    console.error("Response body that failed parsing (first 1000 chars):", responseBody);
                     reject(new Error('Failed to parse JSON response'));
                 }
             });
